@@ -27,23 +27,34 @@ public class PlayerMovement : MonoBehaviour
     {
         isMoving = true;
 
+        //calculate the total number of points using gridPositions.Count
+        int numberOfPoints = grid.gridPositions.Count;
+
         //calculate new grid index after dice roll
-        int targetIndex = (currentGridIndex + steps) % grid.numberOfPoints;
+        int targetIndex = (currentGridIndex + steps) % numberOfPoints;
+        
+        //move step by step towards the target index 
         while(currentGridIndex != targetIndex)
         {
-            currentGridIndex = (currentGridIndex + 1) % grid.numberOfPoints;
+            //increment the index with wrap-around behavior
+            currentGridIndex = (currentGridIndex + 1) % numberOfPoints;
 
+            //get the next position on the grid based on the current index
             Vector2 nextPosition = grid.gridPositions[currentGridIndex];
 
+            //move the player towards the next position
             while((Vector2)transform.position != nextPosition)
             {
                 transform.position = Vector2.MoveTowards(transform.position, nextPosition, movementSpeed * Time.deltaTime);
+                //wait for the next frame before continuing
                 yield return null;
             }
 
+            //small delay between moving to each step
             yield return new WaitForSeconds(0.1f);
         }
 
+        //after reaching the target index set moving to false
         isMoving = false;
     }
 }

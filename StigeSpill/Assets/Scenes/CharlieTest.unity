@@ -359,8 +359,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b44c39161245a34183ee891bef84e5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfPoints: 10
-  radius: 5
+  numberOfRings: 5
+  segmentsPerRing: 0800000010000000180000002000000028000000
+  ringSpacing: 2
   gridPointPrefab: {fileID: 7890140348744952435, guid: e33993c37cfd82f4d88fc033e010ba4d, type: 3}
   gridPositions: []
 --- !u!1001 &4422918172664868173
