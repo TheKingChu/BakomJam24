@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class CircleGrid : MonoBehaviour
 {
+    [Header("Event Tiles")]
+    public GameObject[] eventTilePrefabs;
+    public int numberOfEventTiles = 10;
+
+
     public int numberOfRings = 5;
     //number of segments per ring (ex [8, 12, 16, 20, 24...]
     public int[] segmentsPerRing = new int[] { 8, 16, 24, 32, 40 };
@@ -18,6 +23,31 @@ public class CircleGrid : MonoBehaviour
     void Start()
     {
         CreateCircleGrid();
+        PlaceEventTiles();
+    }
+
+    public int GetRingForPosition(int gridIndex)
+    {
+        int accumulatedSegments = 0;
+        for(int i = 0; i < segmentsPerRing.Length; i++)
+        {
+            accumulatedSegments += segmentsPerRing[i];
+            if(gridIndex < accumulatedSegments)
+            {
+                return i; //return ring index
+            }
+        }
+        return -1; //invalid index, should not happen
+    }
+
+    public int GetRingStartIndex(int ringIndex)
+    {
+        int startIndex = 0;
+        for(int i = 0; i < ringIndex; i++)
+        {
+            startIndex += segmentsPerRing[i];
+        }
+        return startIndex;
     }
 
     private void CreateCircleGrid()
@@ -50,6 +80,47 @@ public class CircleGrid : MonoBehaviour
                     Instantiate(gridPointPrefab, gridPosition, Quaternion.identity);
                 }
             }
+        }
+    }
+
+    private void PlaceEventTiles()
+    {
+        //shuffle the grid positions to randomly pick event tile positions
+        List<int> availablePositions = new List<int>();
+        for(int i = 0; i < gridPositions.Count; i++)
+        {
+            availablePositions.Add(i);
+        }
+
+        //shuffle the list to randomize the available positions
+        Shuffle(availablePositions);
+
+        //place event tiles in random positions
+        for(int i = 0; i < numberOfEventTiles && availablePositions.Count > 0; i++)
+        {
+            int randomIndex = availablePositions[i];
+            Vector2 position = gridPositions[randomIndex];
+
+            //pick a random event tile prefab to place
+            GameObject randomEventTilePrefab = eventTilePrefabs[Random.Range(0, eventTilePrefabs.Length)];
+
+            //instantiate the event tile at the grid position
+            Instantiate(randomEventTilePrefab, position, Quaternion.identity);
+
+            //removing the used position to prevent it from being reused?
+            availablePositions.RemoveAt(i);
+        }
+    }
+
+    //utility method to shuffle a list (fisher-yates shuffle)
+    private void Shuffle(List<int> list)
+    {
+        for(int i = list.Count - 1; i > 0; i--)
+        {
+            int randomIndex = Random.Range(0, i + 1);
+            int temp = list[i];
+            list[i] = list[randomIndex];
+            list[randomIndex] = temp;
         }
     }
 }
