@@ -9,4 +9,29 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
+    public void OnePlayer()
+    {
+        SceneManager.LoadScene(2);
+    }
+
+    public void TwoPlayers()
+    {
+        SceneManager.LoadScene(3);
+    }
+
+    public void ThreePlayers()
+    {
+        SceneManager.LoadScene(4);
+    }
+
+    public void FourPlayers()
+    {
+        SceneManager.LoadScene(5);
+    }
 }

@@ -9,6 +9,18 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 871c66fa3b01a1445a03af5821b16385
   - enabled: 1
-    path: Assets/Scenes/GameScene.unity
+    path: Assets/Scenes/ChoosePlayers.unity
+    guid: d6ff5a03234f1dd4685f402d7a490b32
+  - enabled: 1
+    path: Assets/Scenes/CharlieTest.unity
+    guid: e7db1c89fd77f244f8415b9615b46625
+  - enabled: 1
+    path: Assets/Scenes/TwoPlayers.unity
+    guid: a2d4d41bc5ebbe548b7b49c62eb4c4a6
+  - enabled: 1
+    path: Assets/Scenes/ThreePlayers.unity
+    guid: 8965e717d9e46f147a37282bf01278ba
+  - enabled: 1
+    path: Assets/Scenes/FourPlayers.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   m_configObjects: {}
