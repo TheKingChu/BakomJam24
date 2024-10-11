@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DiceRoller : MonoBehaviour
 {
-    public PlayerMovement playerMovement;
+    public GameManager gameManager;
 
     //array of dice sides sprites to load from Resources folder
     private Sprite[] diceSides;
@@ -17,11 +17,23 @@ public class DiceRoller : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         diceSides = Resources.LoadAll<Sprite>("DiceSides/");
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     private void OnMouseDown()
     {
-        StartCoroutine(RollTheDice());
+        // Loggin the current player's index
+        Debug.Log("Current Player Index: " + gameManager.CurrentPlayerIndex);
+        int playerIndex = transform.parent.GetComponent<PlayerMovement>().playerIndex;
+        //only allow the current player to roll
+        if (gameManager != null && gameManager.CurrentPlayerIndex == playerIndex)
+        {
+            StartCoroutine(RollTheDice());
+        }
+        else
+        {
+            Debug.Log("not the current player's turn");
+        }
     }
 
     private IEnumerator RollTheDice()
@@ -50,9 +62,7 @@ public class DiceRoller : MonoBehaviour
         finalSide = randomDiceSide + 1;
         Debug.Log(finalSide);
 
-        if(playerMovement != null)
-        {
-            playerMovement.MovePlayer(finalSide);
-        }
+        //notify the gamemanager to move the current player
+        gameManager.MoveCurrentPlayer(finalSide);
     }
 }

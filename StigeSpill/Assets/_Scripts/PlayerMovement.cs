@@ -7,11 +7,17 @@ public class PlayerMovement : MonoBehaviour
     public CircleGrid grid;
     //current position on the grid
     public int currentGridIndex = 0;
+    public int playerIndex;
     //player speed
     public float movementSpeed = 2f;
 
     //check if player is already moving
     private bool isMoving = false;
+
+    private void Start()
+    {
+        grid = FindObjectOfType<CircleGrid>();
+    }
 
 
     public void MovePlayer(int steps)
@@ -59,6 +65,7 @@ public class PlayerMovement : MonoBehaviour
 
         //after reaching the target index set moving to false
         isMoving = false;
+        
     }
 
     private void CheckForEventTile()
