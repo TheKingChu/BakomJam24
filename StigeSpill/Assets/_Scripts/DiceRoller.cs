@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DiceRoller : MonoBehaviour
 {
+    public PlayerMovement playerMovement;
+
     //array of dice sides sprites to load from Resources folder
     private Sprite[] diceSides;
     //reference to the sprite renderer to change sprites
@@ -44,9 +46,13 @@ public class DiceRoller : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
         }
 
-        //assigning final side value to be used later
-        //use for player movement
+        //assign final side value (randomDiceSide + 1 because array is 0-indexed)
         finalSide = randomDiceSide + 1;
         Debug.Log(finalSide);
+
+        if(playerMovement != null)
+        {
+            playerMovement.MovePlayer(finalSide);
+        }
     }
 }
